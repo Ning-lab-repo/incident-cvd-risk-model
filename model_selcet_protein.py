@@ -9,13 +9,13 @@ import os
 # --- 文件路径和常量 ---
 file_path = "/home/data/heamei/nmrLR/pro_cox/cvd_morbidity/pro53013_morbidity_delphi_no_baseline_cvd.csv"
 DIAG_COL = "new_diagnosis_after_baseline"
-# DEATH_ICD_COL = "newp_s_alldead" # 移除了对死亡列的依赖
+
 base_path = '/home/data/heamei/nmrLR/pro_cox/cvd_morbidity/model/verify/test_selectes_pro/test'  # 输出路径
 if not os.path.exists(base_path):
     os.makedirs(base_path)
 
 # --- 候选蛋白列表 (示例) ---
-# 注意：实际使用时必须替换为完整的999个蛋白列表
+
 candidate_proteins = [ "CLSTN2","GALNT5","NPPB","CD93","ROBO2","SCARF2","NTproBNP","SDC1","TNFRSF10A","TIMP1","ST6GAL1","GDF15","CST1","ENDOU","TNFRSF13B","ABCA2","PYY",
 "MYL1","PRRT3","RNF149","EDN1","SCN4B","GRP","RNASE10","HRC","CCER2","AHNAK","FSTL1","AHNAK2","PYDC1","SIGLEC8","ADAMTSL4","MYL3","HSDL2","ROBO4","SERPINF1","C7","SOX9",
 "SEZ6","EFNB2","SCT","CLGN","MYLPF","HS6ST2","INHBB","CD300A","CD7","SLITRK1","EPHA4","UNC5D","APOA4","NXPH3","TGFBR1","VEGFB","KLRF1","SPINK2","POF1B","LRG1","NEDD9",
@@ -138,11 +138,7 @@ def process_outcome(outcome):
     sorted_idx = np.argsort(norm_imp)[::-1]
     cum_imp = np.cumsum(norm_imp[sorted_idx])
     
-    # 如果总重要性<0.3，则全部选取 (这种情况不应该发生，但作为保险)
-   # if np.max(cum_imp) < 0.5:
-    #    top_proteins = [candidate_proteins[i] for i in sorted_idx]
-  #  else:
-        # 找到第一个累加>=0.3的位置
+
     idx = np.where(cum_imp >= 0.03)[0][0] + 1
     top_proteins = [candidate_proteins[sorted_idx[j]] for j in range(idx)]
     
