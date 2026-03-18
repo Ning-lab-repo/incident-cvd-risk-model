@@ -14,8 +14,8 @@ suppressPackageStartupMessages({
 
 
 ### ====== 配置区（按需修改） ======
-#input_file_default <- "/home/data/heamei/nmrLR/pro_cox/cvd_morbidity/mri19/pro5317_morbidity_delphi_mri.csv"   # 默认文件（放在 working directory）
-input_file_default <- "/home/data/heamei/nmrLR/pro_cox/cvd_morbidity/mri19/pro5317_morbidity_delphi_mri_no_baseline_cvd.csv"   # 默认文件（放在 working directory）
+
+input_file_default <- "/home/data/heamei/nmrLR/pro_cox/cvd_morbidity/mri19/pro5317_morbidity_delphi_mri_no_baseline_cvd.csv"   
 
 use_file_choose <- FALSE                      # TRUE 则弹出选择文件对话框
 prot_col_start <- 2      # 蛋白列 起始（1-based）
@@ -29,7 +29,7 @@ discrete_covs <- c('season_binary', 'ethnicity', 'Alcohol_intake_frequency_delph
 diagnosis_col <- 'zhen_need_diagnosis'
 # 排除的诊断码例外（I 开头但不排除）
 exclude_exceptions <- c('I79', 'I80', 'I81', 'I82', 'I83', 'I84', 'I85', 'I86', 'I87', 'I88', 'I89', 'I95', 'I97', 'I98', 'I99')
-# 可选：若你有 outcome -> category 映射表（CSV 两列: outcome, category），可设置路径
+
 outcome_category_map_file <- NULL
 # 最小样本量门槛（小于该值将跳过该回归）
 min_N <- 30
