@@ -19,16 +19,16 @@ warnings.filterwarnings('ignore')
 # ---------------------------
 DIAG_COL = "new_diagnosis_after_baseline"
 DIAG_TIME_COL = "time_new_diagnosis_after_baseline"
-DEATH_ICD_COL = "newp_s_alldead"  # 仅用于死亡时间截尾（不作为事件判定）
+DEATH_ICD_COL = "newp_s_alldead"  
 DEATH_DATE_COL = "new2025516_dead_data"
 BASELINE_DATE_COL = "date_attending_assessment_centre"
 CENSOR_DATE = pd.to_datetime("2024-07-08")
 
-# 基线历史诊断与时间（用于排除基线CVD）
+
 BASELINE_HISTORY_DIAG_COL = 'zhen_need_diagnosis'
 BASELINE_HISTORY_TIME_COL = 'zhen_ten_need_time'
 
-# Outcomes (示例，可按需调整)
+
 outcomes = [
     'I10', 'I25', 'I48', 'I20', 'I50', 'I51', 'I44', 'I21', 'I67', 'I08', 'I73', 'I63', 'I26', 'I45', 'I35', 'I49', 'I34', 'I27', 'I47', 'I71', 'G45', 'I24', 'I70', 'I46',
     'I69', 'I31', 'I77', 'I42', 'I65', 'I12', 'I07', 'I61', 'I74', 'I64', 'I72', 'I62', 'I78', 'I60', 'I37', 'I05', 'I36', 'I38', 'I33', 'I22', 'I11', 'I13', 'I15', 'I68'
