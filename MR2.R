@@ -1,4 +1,4 @@
-## -------- 依赖包 (!! 新增 parallel !!) ----------
+
 need <- c("data.table","dplyr","stringr","readxl","writexl",
           "TwoSampleMR","ieugwasr","tibble","purrr",
           "parallel") # !! 新增
@@ -6,22 +6,19 @@ newp <- need[!need %in% installed.packages()[,1]]
 if(length(newp)) install.packages(newp, repos=c("https://mrcieu.r-universe.dev","https://cran.r-project.org"))
 invisible(lapply(need, library, character.only=TRUE))
 
-## -------- 用户路径 (!! 已更新为循环逻辑 !!) ----------
+
 setwd("/home/data/heamei/nmrLR/pro_cox/cvd_morbidity/MR2/MR_re_fig_Combind")
-# 1. 疾病路径
+
 disease_dir <- "/home/data/heamei/nmrLR/pro_cox/cvd_morbidity/gwas_fenngen/"
 
-# 2. 蛋白基础路径 (包含所有 *已解压* 的蛋白文件夹) Combind_egene_gwas   European_GWAS_UKB
 s10_base_dir <- "/home/data/heamei/nmrLR/pro_cox/cvd_morbidity/MR2/Combind_egene_gwas/"
 
-# 3. 蛋白与文件夹的映射
-# !! 'folder' 列必须与 s10_base_dir 中的文件夹名称完全一致
 protein_map <- data.frame(
   stringsAsFactors = FALSE,
   name = c("HAVCR1", "CDCP1", "ACTA2", "NTproBNP", "GDF15", "MMP12", "CXCL17", 
            "EDA2R", "BCAN", "WFDC2", "RBFOX3", "HSPB6", "CDHR2"),
   
-  # 'folder' 是 .gz 文件所在的 *文件夹* (根据你的 ls 输出已全部验证)
+
   folder = c(
     "HAVCR1_Q96D42_OID21422_v1_Oncology",
     "CDCP1_Q9H5V8_OID20940_v1_Neurology",
@@ -43,7 +40,7 @@ protein_map <- data.frame(
 protein_map$path <- file.path(s10_base_dir, protein_map$folder)
 
 
-# 4. 疾病文件映射 (!! 已修改为使用指定的文件列表 !!)
+
 disease_filenames <- c(
   "finngen_R9_I9_AF.gz",
   "finngen_R9_I9_ANGINA.gz",
@@ -82,11 +79,11 @@ if(length(missing_files) > 0) {
 }
 
 
-# 5. 最终输出文件
+
 out_csv_S13_all <- "S13_ALL_protein_to_disease.csv"
 out_csv_S14_all <- "S14_ALL_disease_to_protein.csv"
 
-# 6. !! (新) 临时输出目录 !!
+
 s13_temp_dir <- "s13_temp_results"
 s14_temp_dir <- "s14_temp_results"
 
@@ -215,7 +212,7 @@ safe_ld_clump <- function(dat, clump_r2=0.01, clump_kb=1000,
   dplyr::bind_rows(out) %>% to_df()
 }
 
-# !! (已修复) 恢复了 stop() 逻辑 (来自你的测试代码)
+
 local_ld_clump <- function(dat, clump_r2=0.01, clump_kb=1000){
   temp_pval <- tempfile(fileext = ".pval")
   temp_out  <- tempfile()
@@ -496,8 +493,7 @@ run_mr_protein_to_disease <- function(protein_symbol, s10_data, disease_data_ful
 run_mr_disease_to_protein <- function(protein_symbol, s10_data, disease_exp_dat, rsid_lookup){
   
   if(is.null(disease_exp_dat) || nrow(disease_exp_dat) < 3) {
-    # 这个检查基本是多余的，因为我们在循环开始时就构建了 disease_exp_dat
-    # 但保留它作为安全网
+
     message(sprintf("  -> [? -> %s] 疾病 IVs 不足 (<3)，跳过 S14。", protein_symbol))
     return(NULL)
   }
@@ -554,18 +550,7 @@ run_mr_disease_to_protein <- function(protein_symbol, s10_data, disease_exp_dat,
 }
 
 
-## ======================================================
-## -------- 
-## --------     !! 步骤 0 已被移除 (tar 已解压) !!     --------
-## -------- 
-## ======================================================
 
-
-## ======================================================
-## -------- 
-## --------   !! 主执行循环 (已修改为并行) !!   --------
-## -------- 
-## ======================================================
 
 # !! (新) 步骤 0: 创建临时目录
 message("--- 正在创建临时输出目录 ---")
@@ -776,4 +761,4 @@ if (length(s14_files) > 0) {
 
 message("\n--- 脚本运行完毕 ---")
 message(sprintf("--- (可选) 临时文件已保留在 %s/ 和 %s/ 中。", s13_temp_dir, s14_temp_dir))
-message(sprintf("--- (可选) 你可以稍后手动删除它们: unlink('%s', recursive = TRUE); unlink('%s', recursive = TRUE) ---", s13_temp_dir, s14_temp_dir))
+message(sprintf("--- (可选) 可以稍后手动删: unlink('%s', recursive = TRUE); unlink('%s', recursive = TRUE) ---", s13_temp_dir, s14_temp_dir))
