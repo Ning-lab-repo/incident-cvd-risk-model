@@ -6,7 +6,7 @@ import warnings
 # 1. 全局并行配置 (在导入 numpy/scipy/statsmodels 之前)
 # =============================================================================
 
-# --- 1.1 命令行预解析 (来自用户的参考代码) ---
+# --- 1.1 命令行预解析
 def _preparse_int(argv, keys, default):
     """
     在加载 numpy/pandas 之前，从 sys.argv 快速解析整数参数。
